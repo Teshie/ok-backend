@@ -1,22 +1,17 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
-from .choices import UserTypeChoices, ManagingDepartmentChoice
+from .choices import UserTypeChoices
 from .managers import AccountManger
 from department.models import *
-
-
-
 
 class Account(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(verbose_name="email", max_length=60, unique=True)
     username = models.CharField(max_length=30, unique=True)
     user_type = models.CharField(
-        max_length=50, 
-        choices=UserTypeChoices.choices, 
-        default=UserTypeChoices.CEO, null=True, blank=True
+        max_length=50, null=True, blank=True
     )
-    department_name = models.ForeignKey(Department, models.SET_NULL, blank=True, null=True)
+    department =  models.ForeignKey(Department, on_delete=models.CASCADE, related_name="my_departments", default=1)
 
     date_joined = models.DateTimeField(auto_now_add=True)
     last_login = models.DateTimeField(auto_now=True)

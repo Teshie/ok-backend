@@ -16,6 +16,7 @@ from accounts import models
 from rest_framework import generics
 from django.contrib.auth.models import User
 from .choices import *
+from utils.permissions import *
 
 
 
@@ -64,16 +65,25 @@ class LoginViewSet(ObtainAuthToken):
             }
         )
 
+class AccountList(generics.ListAPIView):
+    """List all users"""
+    queryset = Account.objects.all()
+    serializer_class = serializers.AccountSerializer
+    # permission_classes = [IsClientAdmin]
+
+
 
 @api_view(
     ["GET"],
 )
-def get_client_types(request):
+def get_user_types(request):
     return Response(
         [
-            {"value": UserTypeChoices.CEO, "text": "CEO"},
-            {"value": UserTypeChoices.CFO, "text": "CFO"},
-            {"value": UserTypeChoices.CMO, "text": "CMO"},
+            {"value": UserTypeChoices.CEO, "text": "Chief Executive Officer"},
+            {"value": UserTypeChoices.HoD, "text": "Department Head"},
+            {"value": UserTypeChoices.SUB, "text": "Sub Department"},
+            {"value": UserTypeChoices.CLIENT_ADMIN, "text": "Client Admin"},
         ]
     )
+
 

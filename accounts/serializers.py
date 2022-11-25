@@ -14,14 +14,16 @@ from . import models
 
 
 class AccountSerializer(serializers.ModelSerializer):
-    name = serializers.CharField(source="department.name", read_only=True)
-
     class Meta:
         model = Account
         exclude = ('user_permissions', 'groups',
                    'is_admin', 'is_staff', 'is_superuser',)
 
         extra_kwargs = {"password": {"write_only": True}}
+    def to_representation(self, instance):
+        rep = super(AccountSerializer, self).to_representation(instance)
+        rep['department'] = instance.department.name
+        return rep
 
     def create(self, validated_data):
         """Create and return a new user."""
@@ -43,6 +45,10 @@ class AccountEditSerializer(serializers.ModelSerializer):
         fields = ("email", "username", "department_name", "user_type")
 
         extra_kwargs = {"password": {"write_only": True}}
+    def to_representation(self, instance):
+        rep = super(AccountSerializer, self).to_representation(instance)
+        rep['department'] = instance.department.name
+        return rep
 
 
 
@@ -55,3 +61,5 @@ class AccountDetailSerializer(serializers.ModelSerializer):
                    'is_admin', 'is_staff', 'is_superuser',)
 
         extra_kwargs = {"password": {"write_only": True}}
+
+   

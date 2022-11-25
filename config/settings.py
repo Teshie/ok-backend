@@ -128,7 +128,7 @@ MEDIA_ROOT = BASE_DIR.joinpath('media')
 AUTH_USER_MODEL = "accounts.Account"
 
 
-ADMIN_SITE_HEADER = "CYBERMINDS Administration"
+ADMIN_SITE_HEADER = "Digital Ethiopia Administration"
 
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

@@ -7,7 +7,7 @@ from . import models
 
 
 class AccountAdmin(UserAdmin):
-    list_display = ("username", "email", "is_admin", 'department_name')
+    list_display = ("username", "email", "is_admin", "department" )
     list_filter = ("is_admin", "user_type",)
     fieldsets = (
         (
