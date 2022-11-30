@@ -8,11 +8,8 @@ from department.models import *
 class Account(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(verbose_name="email", max_length=60, unique=True)
     username = models.CharField(max_length=30, unique=True)
-    user_type = models.CharField(
-        max_length=50, null=True, blank=True
-    )
-    department =  models.ForeignKey(Department, on_delete=models.CASCADE, related_name="my_departments", default=1)
-
+    market =  models.CharField(max_length=30,  default="market")
+    
     date_joined = models.DateTimeField(auto_now_add=True)
     last_login = models.DateTimeField(auto_now=True)
     is_admin = models.BooleanField(default=False)

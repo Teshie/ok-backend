@@ -7,8 +7,8 @@ from . import models
 
 
 class AccountAdmin(UserAdmin):
-    list_display = ("username", "email", "is_admin", "department" )
-    list_filter = ("is_admin", "user_type",)
+    list_display = ("username", "email", "is_admin", "market" )
+    list_filter = ("is_admin",)
     fieldsets = (
         (
             None,
@@ -17,7 +17,7 @@ class AccountAdmin(UserAdmin):
                     "username",
                     "email",
                     "password",
-                    "user_type",
+                   
                 )
             },
         
