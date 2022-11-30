@@ -25,7 +25,6 @@ INSTALLED_APPS = [
     'django_filters',
     'rest_framework_swagger',
     "accounts",
-    "department",
     "billings",
 ]
 

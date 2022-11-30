@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from .choices import UserTypeChoices
 from .managers import AccountManger
-from department.models import *
+
 
 class Account(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(verbose_name="email", max_length=60, unique=True)
@@ -33,7 +33,7 @@ class Account(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.email
 
-register_models = [ Department, SubDepartment, Account ]
+register_models = [ Account ]
    
 
 

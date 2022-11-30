@@ -5,6 +5,8 @@ from .models import *
 
 from rest_framework import generics
 
+from rest_framework.permissions import IsAuthenticated, AllowAny
+
 class CategoryCreateList(generics.ListCreateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
@@ -16,14 +18,13 @@ class CategoryUpdateDelete(generics.RetrieveUpdateDestroyAPIView):
 
         
 class ProductCreateList(generics.ListCreateAPIView):
+    # queryset = Product.objects.all()
+    permission_classes = [IsAuthenticated,]
     serializer_class = ProductSerializer
 
     def get_queryset(self):
         user = self.request.user
         return Product.objects.filter(user=user.id)
-
-
-
 
 class ProductDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Product.objects.all()
