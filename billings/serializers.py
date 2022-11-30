@@ -17,12 +17,12 @@ class ProductSerializer(serializers.ModelSerializer):
 class CartSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cart
-        fields = ['id', 'name', 'imgUrl', 'selling_price', 'actual_price', 'quantity', 'get_profit', 'date']
+        fields = ['id', 'user', 'name', 'imgUrl', 'selling_price', 'actual_price', 'quantity', 'get_profit', 'date']
 
 class StoreSerializer(serializers.ModelSerializer):
     class Meta:
         model = Store
-        fields = ['id', 'name', 'imgUrl', 'selling_price', 'actual_price', 'quantity',  'get_profit']
+        fields = ['id', 'user', 'name', 'imgUrl', 'selling_price', 'actual_price', 'quantity',  'get_profit']
 
 
 
