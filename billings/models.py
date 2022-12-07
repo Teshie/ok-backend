@@ -14,7 +14,7 @@ class Category(models.Model):
         return self.name
         
 class Product(models.Model):
-    user = models.ForeignKey('accounts.Account', on_delete=models.CASCADE, default=1)
+    user = models.ForeignKey('accounts.Account', on_delete=models.CASCADE, related_name='products')
     name = models.CharField(max_length=100, null=True, blank=True)
     imgUrl = models.TextField(default='')
     selling_price = models.FloatField(null=True, blank=True)
@@ -29,7 +29,7 @@ class Product(models.Model):
         return self.selling_price - self.actual_price
 
 class Store(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, default=1, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, default=1, on_delete=models.CASCADE, related_name='stores')
     name = models.CharField(max_length=100)
     imgUrl = models.TextField(null=True, blank=True)
     selling_price = models.FloatField(null=True, blank=True)
@@ -42,7 +42,7 @@ class Store(models.Model):
     def get_profit(self):
         return self.selling_price - self.actual_price
 class Cart(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, default=1, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, default=1, on_delete=models.CASCADE, related_name='carts')
     get_profit = models.IntegerField(default=1)
     name = models.CharField(max_length=100, default='name')
     imgUrl=models.TextField(default="")

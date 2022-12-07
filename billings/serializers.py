@@ -7,17 +7,17 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = '__all__'
+    
 
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ['id', 'user', 'name', 'imgUrl', 'selling_price', 'actual_price', 'quantity', 'get_profit']
-
+        fields = ['id', 'name', 'imgUrl', 'selling_price', 'actual_price', 'quantity', 'get_profit']
 
 class CartSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cart
-        fields = ['id', 'user', 'name', 'imgUrl', 'selling_price', 'actual_price', 'quantity', 'get_profit', 'date']
+        fields = ['id', 'name', 'imgUrl', 'selling_price', 'actual_price', 'quantity', 'get_profit', 'date']
 
 class StoreSerializer(serializers.ModelSerializer):
     class Meta:
