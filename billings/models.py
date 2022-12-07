@@ -54,6 +54,19 @@ class Cart(models.Model):
     def __str__(self):
         return self.name
 
+class Order(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, default=1, on_delete=models.CASCADE, related_name='orders')
+    name = models.CharField(max_length=100, default='name')
+    imgUrl=models.TextField(default="")
+    selling_price= models.FloatField(default=1)
+    actual_price= models.FloatField(default=1)
+    quantity= models.IntegerField(default=1)
+    date= models.CharField(max_length=100, default="")
+    status= models.CharField(max_length=100, default="pending")
+     
+    def __str__(self):
+        return self.name
+
 
 
   
