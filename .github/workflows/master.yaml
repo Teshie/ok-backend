@@ -16,23 +16,19 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.10 # Replace with your desired Python version
+          python-version: 3.x # Replace with your desired Python version
 
       - name: Install dependencies
         run: pip install -r requirements.txt
 
       - name: Deploy to EC2
-        uses: appleboy/scp-action@v1
+        uses: appleboy/ssh-action@master
         with:
-          host: 18.188.33.59
+          host: 172.31.19.96
           username: ubuntu
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: . # Replace with the appropriate source directory to copy
-          target: /home/ubuntu/ok-backend # The target directory on your EC2 instance
-
-      - name: SSH into EC2 and restart Gunicorn
-        run: |
-          ssh ubuntu@18.188.33.59 'source /home/ubuntu/venv/bin/activate && cd /home/ubuntu/ok-backend && gunicorn --workers 3 --bind unix:ok-backend.sock config.wsgi:application'
-
-      - name: SSH into EC2 and restart Nginx
-        run: ssh ubuntu@18.188.33.59 'sudo systemctl restart nginx'
+          port: 22
+          script: |
+            scp -r . ubuntu@172.31.19.96:/home/ubuntu/ok-backend
+            ssh ubuntu@172.31.19.96 'source /home/ubuntu/venv/bin/activate && cd /home/ubuntu/ok-backend && gunicorn --workers 3 --bind unix:ok-backend.sock config.wsgi:application'
+            ssh ubuntu@172.31.19.96 'sudo systemctl restart nginx'
