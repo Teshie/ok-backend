@@ -3,7 +3,7 @@ name: Deploy to EC2
 on:
   push:
     branches:
-      - main # Replace with the branch you want to trigger CI/CD on (e.g., master, main, etc.)
+      - main  # Replace with the branch you want to trigger CI/CD on (e.g., master, main, etc.)
 
 jobs:
   deploy:
@@ -16,7 +16,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: "3.10" # Replace with your desired Python version
+          python-version: 3.x  # Replace with your desired Python version
 
       - name: Install dependencies
         run: pip install -r requirements.txt
@@ -29,6 +29,6 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            scp -r . ubuntu@18.188.33.59:/home/ubuntu/ok-backend
-            ssh -i ${{ secrets.SSH_PRIVATE_KEY }} ubuntu@18.188.33.59 'source /home/ubuntu/venv/bin/activate && cd /home/ubuntu/ok-backend && gunicorn --workers 3 --bind unix:ok-backend.sock config.wsgi:application'
-            ssh -i ${{ secrets.SSH_PRIVATE_KEY }} ubuntu@18.188.33.59 'sudo systemctl restart nginx'
+            scp -o StrictHostKeyChecking=no -r . ubuntu@18.188.33.59:/home/ubuntu/ok-backend
+            ssh -o StrictHostKeyChecking=no -i "${HOME}/.ssh/id_rsa" ubuntu@18.188.33.59 'source /home/ubuntu/venv/bin/activate && cd /home/ubuntu/ok-backend && gunicorn --workers 3 --bind unix:ok-backend.sock config.wsgi:application'
+            ssh -o StrictHostKeyChecking=no -i "${HOME}/.ssh/id_rsa" ubuntu@18.188.33.59 'sudo systemctl restart nginx'
